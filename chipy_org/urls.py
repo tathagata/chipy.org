@@ -3,6 +3,8 @@ from django.conf.urls.defaults import *
 from django.views.generic.simple import direct_to_template
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import admin
+from tastypie.api import Api
+from meetings.api import MeetingResource
 
 from contact.views import ChipyContactView
 
@@ -23,6 +25,14 @@ urlpatterns = patterns("",
                           {'next_page': '/'}),
     url(r'^contact/', ChipyContactView.as_view(), name="contact"),
     url(r'^tinymce/', include('tinymce.urls')),
+)
+
+# API Urls
+v1_api = Api(api_name='v1')
+v1_api.register(MeetingResource())
+
+urlpatterns += patterns('',
+    (r'^api/', include(v1_api.urls)),
 )
 
 if settings.SERVE_MEDIA:
