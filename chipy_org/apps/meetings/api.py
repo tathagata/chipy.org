@@ -19,6 +19,14 @@ class TopicResource(ModelResource):
 
 class MeetingResource(ModelResource):
     where = fields.ForeignKey(VenueResource, 'where', full = True)
+    date = fields.DateTimeField()
+    
+    def dehydrate(self, bundle):
+        # Include the request IP in the bundle.
+        bundle.data['date'] = bundle.data['when']
+        del bundle.data['when']
+        return bundle
+
     
     class Meta:
         queryset = Meeting.objects.all()
