@@ -221,6 +221,7 @@ INSTALLED_APPS = [
     'meetings',
     'profiles',
     'sponsors',
+    'mentorship',
 ]
 
 if DEBUG:
